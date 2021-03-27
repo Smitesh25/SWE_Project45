@@ -98,8 +98,14 @@ const storage = multer.diskStorage({
       res.status(400).send("error");
     }
   });
-  app.get('/',(req,res)=>{
+  app.get('/drift',(req,res)=>{
     res.render('index',{menus,active:'Home',dataToSend,flag});
+})
+  app.get('/',(req,res)=>{
+    res.render('home',{menus,active:'Home',dataToSend,flag});
+})
+  app.get('/classify',(req,res)=>{
+    res.render('classify',{menus,active:'Home',dataToSend,flag});
 })
 app.get('/about',(req,res)=>{
     res.render('about',{menus,active:'About'});
@@ -131,13 +137,35 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
       return next(error)
     }
     dataSetName=file.path;
-    const python = spawn('python',['./main/D3.py',dataSetName,'100','0.1','0.7']);
+    const python = spawn('python',['./main/test.py',dataSetName,'1000']);
     python.stdout.on('data', (data) =>{
     console.log(`stdout:${data}`,'hey');
     dataToSend = data.toString();
     flag=1;
     console.log('hey');
-    res.redirect('/');
+    res.redirect('/drift');
+    });
+    python.on('close', (code) => {
+    console.log(`child process exited with the code ${code}`);
+    //res.render('graph',{menus,active:'Home'});
+    });
+    
+  });
+app.post('/uploadfile2', upload.single('myFile'), (req, res, next) => {
+    const file = req.file
+    if (!file) {
+      const error = new Error('Please upload a file')
+      error.httpStatusCode = 400
+      return next(error)
+    }
+    dataSetName=file.path;
+    const python = spawn('python',['./main/classify.py',dataSetName]);
+    python.stdout.on('data', (data) =>{
+    console.log(`stdout:${data}`,'hey');
+    dataToSend = data.toString();
+    flag=1;
+    console.log('hey');
+    res.redirect('/classify');
     });
     python.on('close', (code) => {
     console.log(`child process exited with the code ${code}`);

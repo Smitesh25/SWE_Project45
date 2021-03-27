@@ -180,6 +180,17 @@ input{
   display: flex;
 }
 
+.home{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  margin-top: auto;
+}
+.home a{
+  min-width: max-content;
+  text-decoration: none;
+  width: 30%;
+}
 
 .pre-choose{
   width: max-content;
