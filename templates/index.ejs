@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="icon.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Drift detection software</title>
+</head>
+<body>
+    <div id="blured" class="blur">
+    </div>  
+    <div class="loader loading" id="loading">Loading...</div>
+    <%- include('header') %>
+    <div class="main">
+        <div class="left">
+        <h1 class="main-head">Upload your datasets</h1>
+        <!-- <button onclick="myFunction()"><a href="/graph">Graph</a></button> -->
+        <!-- <form method="POST" action="/uploadfile" enctype="multipart/form-data">
+            <div>
+                <label>Select your profile picture:</label>
+                <input type="file" name="profile_pic" />
+            </div>
+            <div>
+                <input type="submit" name="btn_upload_profile_pic" value="Upload" />
+            </div>
+        </form> -->
+        <form action="/uploadfile" enctype="multipart/form-data" method="POST">
+    <div class="pre-choose">
+    <input class="choose" type="file" name="myFile" />
+    <img src="icon1.png">
+    </div> 
+    <div class="pre-submit">
+    <input class="submit" onclick="myFunction()" type="submit" value="Analyse" />
+    <img src="icon2.png">
+    </div>  
+    </form>
+        </div>
+        <div class="right"><img src="home.png"> </div>
+    </div>
+    <div class="output">
+        <h1 class="out-head"><%=dataToSend %></h1>
+        <br>
+        <br>
+        <%   if(flag===1){    %>
+            <img id="picture" src="../preq.png">
+            <%  } %>
+    </div>
+    <script src="/js/myscripts.js"></script>
+</body>
+</html>

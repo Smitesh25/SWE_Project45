@@ -1,0 +1,13 @@
+<header>
+    <h3 class="logo">Streaming Datasets</h3>
+    <nav class="navbar">
+        <% menus.forEach(menu=>{ %>
+         <%   if(active===menu.label){    %>
+            <a class="navlink" href='<%=menu.path%>' class="active"><%=menu.label%></a>
+            <%  } else{  %>
+                <a class="navlink" href='<%=menu.path%>'><%=menu.label%></a>
+                <%  }  %>
+            
+         <% })  %>
+    </nav>
+</header>
