@@ -7,7 +7,9 @@ const path = require('path');
 const helpers = require('./helpers');
 const mongoose = require('mongoose');
 const hbs=require("hbs");
-const ejsMate=require('ejs-mate')
+const ejsMate=require('ejs-mate');
+const bcrypt=require('bcrypt');
+const session=require('express-session')
 
 require("./db/conn");
 
@@ -26,6 +28,33 @@ const partials_path=path.join(__dirname,"/templates");
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+//app.use(session({secret:'notagoodone'}))
+
+// app.use(express.session({
+//   secret: 'notagoodone',
+//   path:'/',
+//   proxy: true,
+//   resave: true,
+//   cookie: {
+//     httpOnly: true,
+//     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+//     maxAge: 1000 * 60 * 60 * 24 * 7
+//   },
+//   saveUninitialized: true
+// }));
+
+const sessionConfig = {
+  secret: 'thisshouldbeabettersecret!',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      httpOnly: true,
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7
+  }
+}
+app.use(session(sessionConfig));
+
 
 app.use(express.static(static_path));
 app.engine('ejs',ejsMate)
@@ -54,6 +83,20 @@ const storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 
+  const requireLogin=(req,res,next)=>{
+    if(!req.session.user_id){
+      return res.redirect('/login')
+    }
+    next();
+  }
+
+
+  app.use((req, res, next) => {
+    //console.log(req.session)
+    res.locals.currentUser = req.user;
+    next();
+  })
+
   app.get('/register',(req,res)=>{
     res.render("register");
   })
@@ -61,23 +104,29 @@ const storage = multer.diskStorage({
   app.get('/login',(req,res)=>{
     res.render("login");
   })
-  app.post('/register',async(req,res)=>{
+
+  app.post('/register', async(req,res)=>{
       try{
         const registerUser=new Register({
           name:req.body.name,
           email:req.body.email,
-          password:req.body.password
+          //password:req.body.password
+          password:await bcrypt.hash(req.body.password,10)
         })
-    
+        //await user.save();
+        //req.session.user_id=userName._id;
         const registered=await registerUser.save();
-        res.status(201).render('login');
+        
+        //res.status(201).render("index");
+        res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
+        //res.send("hey fool");
+        console.log(userName._id);   
+
       }
       catch(err){
         res.status(400).send(err);
       }
     })
-    
-  
 
   app.post("/login",async(req,res)=>{
     try{
@@ -87,9 +136,15 @@ const storage = multer.diskStorage({
       if(name==='admin'){
         res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
       }
-      else if(userName.password===password){
-        res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
-      }    
+      // else if(userName.password===password){
+      //   res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
+      // }   
+      const validPassword=await bcrypt.compare(password,userName.password)
+      if(validPassword){
+        req.session.user_id=userName._id;
+        res.status(201).render('home',{menus,active:'Home',dataToSend,flag});        
+        //req.session.user_id=1;
+      }
       else{
         res.send("credentials didnt match");
       }
@@ -98,21 +153,29 @@ const storage = multer.diskStorage({
       res.status(400).send("error");
     }
   });
-  app.get('/drift',(req,res)=>{
+
+  app.get('/logout',(req,res)=>{
+    req.session.user_id=null;
+    res.redirect('/register');
+  })
+
+  app.get('/drift',requireLogin, (req,res)=>{
     res.render('index',{menus,active:'Home',dataToSend,flag});
 })
-  app.get('/',(req,res)=>{
+  app.get('/', requireLogin, (req,res)=>{
+    if(!req.session.user_id) res.render('login')
     res.render('home',{menus,active:'Home',dataToSend,flag});
 })
-  app.get('/classify',(req,res)=>{
+  app.get('/classify',requireLogin,(req,res)=>{
     res.render('classify',{menus,active:'Home',dataToSend,flag});
 })
-app.get('/about',(req,res)=>{
+app.get('/about',requireLogin, (req,res)=>{
     res.render('about',{menus,active:'About'});
 })
-app.get('/faq',(req,res)=>{
+app.get('/faq', requireLogin, (req,res)=>{
     res.render('faq',{menus,active:'FAQ'});
 })
+
 // app.get('/graph',(req,res)=>{
 //     //res.render('graph',{menus,active:'Home'});
 //     const python = spawn('python',['./main/D3.py','./main/myFile-1615908396914.csv','100','0.1','0.7']);

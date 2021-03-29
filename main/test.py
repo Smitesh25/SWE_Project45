@@ -57,4 +57,3 @@ if __name__ == '__main__':
     plt.legend(loc='lower right')
     plt.ylim([0, 1])
     f.savefig("plot.png", bbox_inches='tight')
-    plt.show()
