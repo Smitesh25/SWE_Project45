@@ -347,12 +347,25 @@ input{
   margin: auto;
   text-align: center;
   background-color: white;
-  color: #fdcd11;
+  font-family: Poppins;
 }
 
+.about-card-head{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  color: #090e2a;
+}
 .title {
+  font-family: Poppins;
+  font-style: normal;
   color: grey;
   font-size: 18px;
+}
+.about-roll{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
 }
 
 button {
