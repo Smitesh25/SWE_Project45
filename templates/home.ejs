@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="icon.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>MiningPort</title>
+</head>
+<body>
+    <div id="blured" class="blur">
+    </div>  
+    <div class="loader loading" id="loading">Loading...</div>
+    <%- include('header') %>
+    <div class="main">
+        <div class="left home">
+            <a href="/drift" class="pre-choose">
+                <p class="choose">
+                Detect Drift
+                </p>    
+            </a>
+            <a href="/classify" class="pre-choose">
+                <p class="choose">
+                Classify Datasets
+                </p>    
+            </a>
+        </div>
+        <div class="right"><img src="home.png"> </div>
+    </div>
+    <script src="/js/myscripts.js"></script>
+</body>
+</html>

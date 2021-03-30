@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>About </title>
+</head>
+<body>
+<%- include('header') %>
+<div class="about-text-container">
+<p class="about">
+    Hello! This page is divided into 3 sections; about miningport, about the technology used in the backend, and brief introduction about the group members.
+</p>
+<br>
+<p class="about">
+
+MiningPort is a web based application wherein you can do a detailed analysis of a dataset which includes concept-drift detection and classification of the uploaded dataset. This web based software is created as a part of our Software Engineering course project.
+</p>
+<br>
+<p class="about">
+In order to check if there exists concept-drift within the dataset, please click on the detect drift button. After clicking on the detect drift button, you will be directed to the detect drift page, where you will be asked to choose a dataset and provide an appropriate window length. Once done providing the input, the results will be displayed on the page after the python program finishes execution in the backend. The results involve the mean accuracy within the provided window, number of indices where drift is detected and time taken to detect drift for each of the 3 methods-Adwin, DDM and Page Hinkley. Also an accuracy vs instance of data plot will be displayed. 
+</p>
+<br>
+<p class="about">
+For classifying the dataset, click on the classify button. After clicking on the classify dataset button, you will be directed to the classification page, where you will be asked to choose a dataset you wish to classify. Once done providing the input, click on classify button. The results will be displayed on the page after the python program finishes execution in the backend. The results involve the accuracy to classify the dataset, the time taken to classify the dataset and a visual representation of the classification report which involves the precision, f1 score, support, etc.
+</p>
+<br>
+<p class="about">
+The technology involved behind creating this web application is python as a programming language, MongoDB as the database and html, css and javascript as scripting languages.
+</p>
+<br>
+</p>
+<br>
+</div>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="about-cards">
+
+  <div class="card">
+  <img src="mehul.jpg" alt="John" style="width:100%">
+  <h1>Mehul Garg</h1>
+  <p class="title">Web Developer</p>
+  <p>IIT2019041</p>
+  <a href="#"><i class="fa fa-twitter"></i></a>
+  <a href="#"><i class="fa fa-linkedin"></i></a>
+  <a href="#"><i class="fa fa-facebook"></i></a>
+  <p><button>Visit Github</button></p>
+  </div>
+
+  <div class="card">
+    <img src="smith.jpg" alt="John" style="width:100%">
+    <h1>Smitesh Hadape</h1>
+    <p class="title">Web Developer and Designer</p>
+    <p>IIT2019090</p>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <p><button>Visit Github</button></p>
+  </div>
+
+  <div class="card">
+    <img src="tanish.jpg" alt="John" style="width:100%">
+    <h1>Tanish Patel</h1>
+    <p class="title">Data Science and ML enthusiast</p>
+    <p>IIT2019092</p>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <p><button>Visit Github</button></p>
+  </div>
+
+</div>
+
+  </div>
+</div>
+
+</body>
+</html>

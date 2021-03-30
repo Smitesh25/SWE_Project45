@@ -1,0 +1,18 @@
+<header>
+    <h3 class="logo">MiningPort</h3>
+    <nav class="navbar">
+        <% menus.forEach(menu=>{ %>
+         <%   if(active===menu.label){    %>
+            <a class="navlink" href='<%=menu.path%>' class="active"><%=menu.label%></a>
+            <%  } else{  %>
+                <a class="navlink" href='<%=menu.path%>'><%=menu.label%></a>
+                <%  }  %>
+            
+         <% })  %>
+         <%   if(flag===0){    %>
+                <a class="navlink" href='/login'>Login</a>
+            <%  } else{  %>
+                <a class="navlink logout" href='/logout'></a>
+            <%  }  %>
+    </nav>
+</header>
