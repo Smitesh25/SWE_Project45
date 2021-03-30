@@ -156,8 +156,9 @@ const storage = multer.diskStorage({
   });
 
   app.get('/logout',(req,res)=>{
+    flag=0;
     req.session.user_id=null;
-    res.redirect('/login');
+    res.redirect('/');
   })
 
   app.get('/drift',requireLogin, (req,res)=>{
