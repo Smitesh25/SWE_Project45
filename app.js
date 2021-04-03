@@ -177,7 +177,7 @@ app.get('/about', (req,res)=>{
     res.render('about',{menus,active:'About',flag});
 })
 app.get('/faq', (req,res)=>{
-    res.render('faq',{menus,active:'FAQ'});
+    res.render('faq',{menus,active:'FAQ',dataToSend,flag});
 })
 
 // app.get('/graph',(req,res)=>{

@@ -3,7 +3,7 @@
     <nav class="navbar">
         <% menus.forEach(menu=>{ %>
          <%   if(active===menu.label){    %>
-            <a class="navlink" href='<%=menu.path%>' class="active"><%=menu.label%></a>
+            <a class="navlink" href='<%=menu.path%>' id="active"><%=menu.label%></a>
             <%  } else{  %>
                 <a class="navlink" href='<%=menu.path%>'><%=menu.label%></a>
                 <%  }  %>
