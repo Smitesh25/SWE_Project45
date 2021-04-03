@@ -4,11 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>FAQ</title>
 </head>
 <body>
     <%- include('header') %>
-    <h1>FAQ</h1>
-   <!-- <img src="../preq.png">-->
+    <div class="faq_title">
+        <h1>Frequently Asked Questions</h1> 
+    </div>
+
+<div class="container">
+    <button class="accordion">What algorithm is being used for classification?</button>
+    <div class="panel">
+    <p>Random Forest Classifier is being used for classification.
+    </p>
+    </div>
+
+    <button class="accordion">How much time does it take for drift detection and classification?</button>
+    <div class="panel">
+    <p>The time taken for the python program to run depends on the size of the dataset uploaded. Smaller the size of the dataset, lesser is the time taken.
+    </p>
+    </div>
+
+    <button class="accordion">Which type of datasets would give the best results while detecting drift?</button>
+    <div class="panel">
+    <p>It has been observed that binary-class datasets give the best results in drift detection.
+    </p>
+    </div>
+
+    <button class="accordion">What does AdWin stand for?</button>
+    <div class="panel">
+    <p>AdWin stands for Adaptive Sliding Windowing Algorithm.
+    </p>
+    </div>
+</div>
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+</script>
+
 </body>
 </html>
