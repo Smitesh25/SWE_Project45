@@ -196,7 +196,7 @@ app.get('/faq', (req,res)=>{
 //     //res.render('graph',{menus,active:'Home'});
 // })
 let dataSetName;
-let WindowSize;
+//let WindowSize=1000;
 app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
     const file = req.file
     if (!file) {
@@ -205,9 +205,11 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
       return next(error)
     }
     dataSetName=file.path;
-    //WindowSize=document.getElementById('WindowLengthInput').value;
-    const python = spawn('python',['./main/test.py',dataSetName,'1000']);
+   // WindowSize=document.getElementById('WindowLengthInput').value;
+    var WindowSize=req.body.windowlen;
     console.log(WindowSize);
+    const python = spawn('python',['./main/test.py',dataSetName,WindowSize]);
+    //console.log(WindowSize);
     python.stdout.on('data', (data) =>{
     console.log(`stdout:${data}`,'hey');
     dataToSend = data.toString();

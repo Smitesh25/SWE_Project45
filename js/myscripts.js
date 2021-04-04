@@ -4,4 +4,6 @@ function myFunction() {
       x.style.display = "block";
     var x = document.getElementById("blured");
       x.style.display = "block";
+    var x = document.getElementById("length").value;
+    
   }
