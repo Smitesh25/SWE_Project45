@@ -107,12 +107,14 @@ const storage = multer.diskStorage({
     res.render("login");
   })
 
+  let usermail='';
   app.post('/register', async(req,res)=>{
       try{
         const registerUser=new Register({
           name:req.body.name,
-          email:req.body.email,
+          usermail:req.body.email,
           //password:req.body.password
+         // usermail=req.body.email,
           password:await bcrypt.hash(req.body.password,10)
         })
         //await user.save();
@@ -122,19 +124,20 @@ const storage = multer.diskStorage({
         //res.status(201).render("index");
         res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
         //res.send("hey fool");
-        console.log(userName._id);   
+       // console.log(usermail._id);   
 
       }
       catch(err){
         res.status(400).send(err);
       }
     })
-
   app.post("/login",async(req,res)=>{
     try{
       const name=req.body.name;
       const password=req.body.password;
       const userName=await Register.findOne({name});
+      //const usermail=await Register.findOne({email});
+      usermail=userName.email;
       if(name==='admin'){
         res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
       }
@@ -228,7 +231,7 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
 
     var mailOptions = {
       from: 'miningport.dataanalyser@gmail.com',
-      to: 'iit2019090@iiita.ac.in',
+      to: usermail,
       subject: 'Drift detection report',
       html:output,
       attachments:[
@@ -279,7 +282,7 @@ app.post('/uploadfile2', upload.single('myFile'), (req, res, next) => {
 
     var mailOptions = {
       from: 'miningport.dataanalyser@gmail.com',
-      to: 'iit2019090@iiita.ac.in',
+      to: usermail,
       subject: 'Dataset classification report',
       html:output,
       attachments:[
