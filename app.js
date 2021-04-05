@@ -10,6 +10,7 @@ const hbs=require("hbs");
 const ejsMate=require('ejs-mate');
 const bcrypt=require('bcrypt');
 const session=require('express-session')
+var nodemailer = require('nodemailer');
 
 require("./db/conn");
 
@@ -214,7 +215,36 @@ app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
     console.log(`stdout:${data}`,'hey');
     dataToSend = data.toString();
     flag=1;
-    console.log('hey');
+    //console.log('hey');
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'miningport.dataanalyser@gmail.com',
+        pass: 'nahibatana'
+      }
+    });
+    const output = `
+    <h3>${dataToSend}</h3>`;
+
+    var mailOptions = {
+      from: 'miningport.dataanalyser@gmail.com',
+      to: 'iit2019090@iiita.ac.in',
+      subject: 'Drift detection report',
+      html:output,
+      attachments:[
+        {
+          filename:'plot.png',path:'./plot.png'
+        }
+      ]
+    };
+  
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
     res.redirect('/drift');
     });
     python.on('close', (code) => {
@@ -236,7 +266,36 @@ app.post('/uploadfile2', upload.single('myFile'), (req, res, next) => {
     console.log(`stdout:${data}`,'hey');
     dataToSend = data.toString();
     flag=2;
-    console.log('hey');
+    //console.log('hey');
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'miningport.dataanalyser@gmail.com',
+        pass: 'nahibatana'
+      }
+    });
+    const output = `
+    <h3>${dataToSend}</h3>`;
+
+    var mailOptions = {
+      from: 'miningport.dataanalyser@gmail.com',
+      to: 'iit2019090@iiita.ac.in',
+      subject: 'Dataset classification report',
+      html:output,
+      attachments:[
+        {
+          filename:'class.png',path:'./class.png'
+        }
+      ]
+    };
+  
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
     res.redirect('/classify');
     });
     python.on('close', (code) => {
@@ -245,6 +304,9 @@ app.post('/uploadfile2', upload.single('myFile'), (req, res, next) => {
     });
     
   });
+
+
+
 
 
 const PORT=process.env.PORT||3000
