@@ -112,17 +112,21 @@ const storage = multer.diskStorage({
       try{
         const registerUser=new Register({
           name:req.body.name,
-          usermail:req.body.email,
+          email:req.body.email,
           //password:req.body.password
          // usermail=req.body.email,
           password:await bcrypt.hash(req.body.password,10)
         })
         //await user.save();
         //req.session.user_id=userName._id;
+       // req.session.user_id=userName._id;
         const registered=await registerUser.save();
-        
+        usermail=registerUser.email;
+        console.log(registerUser.email);
         //res.status(201).render("index");
-        res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
+        //console.log(usermail);
+        req.session.user_id=registerUser.name;
+        res.status(201).render('home',{menus,active:'Home',dataToSend,flag});
         //res.send("hey fool");
        // console.log(usermail._id);   
 
@@ -138,6 +142,7 @@ const storage = multer.diskStorage({
       const userName=await Register.findOne({name});
       //const usermail=await Register.findOne({email});
       usermail=userName.email;
+      console.log(userName);
       if(name==='admin'){
         res.status(201).render('index',{menus,active:'Home',dataToSend,flag});
       }
